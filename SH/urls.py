@@ -5,6 +5,9 @@ from . import views
 
 urlpatterns = [
     path('user/', views.User_list, name="Let's"),
+    path('sensors/', views.ESPSensor_list),
+    path('outputs/', views.ESPOut_list),
+    
         
     path('espoutdetail/<int:esp_id>/', views.ESPOut_listdetail),
     path('espsensordetail/<int:esp_id>/', views.ESPSensor_listdetail),

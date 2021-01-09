@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ESPSensorSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = ESPSensor
-		fields = ['id', 'name', 'pin', 'valueTemp', 'valueAvgDay', 'valueAvgWeek', 'description']
+		fields = ['id', 'name', 'pin', 'status', 'valueTemp', 'valueAvgDay', 'valueAvgWeek', 'description']
 		
 class ESPOutSerializer(serializers.ModelSerializer):
 	class Meta:

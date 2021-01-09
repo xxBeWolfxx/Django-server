@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 
     
 @api_view(['GET','POST','PUT'])
-def ESPSensor_list(request, user_id):
+def ESPSensor_list(request, user_id = 3):
     try:
         user = User.objects.get(pk = user_id)
     except User.DoesNotExist:
@@ -25,7 +25,7 @@ def ESPSensor_list(request, user_id):
         serializer = ESPSensorSerializer(espS, many = True)
         return Response(serializer.data)
         
-    elif request.method == 'POST':
+    elif request.method == 'PUT':
         serializer = ESPSensorSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
@@ -44,7 +44,7 @@ def ESPSensor_listdetail(request, esp_id):
         return Response(serializer.data)
     
     
-    elif request.method == 'PUT':
+    elif request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = ESPSensorSerializer(esp, data = data)
         if serializer.is_valid():
@@ -57,7 +57,7 @@ def ESPSensor_listdetail(request, esp_id):
         return Response(status = status.HTTP_204_NO_CONTENT)
     
 @api_view(['GET','POST','PUT'])
-def ESPOut_list(request, user_id):
+def ESPOut_list(request, user_id = 3):
     try:
         user = User.objects.get(pk = user_id)
     except User.DoesNotExist:
@@ -68,7 +68,7 @@ def ESPOut_list(request, user_id):
         serializer = ESPOutSerializer(espO, many = True)
         return Response(serializer.data)
         
-    elif request.method == 'POST':
+    elif request.method == 'PUT':
         serializer = ESPOutSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
@@ -87,7 +87,7 @@ def ESPOut_listdetail(request, esp_id):
         return Response(serializer.data)
     
     
-    elif request.method == 'PUT':
+    elif request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = ESPOutSerializer(esp, data = data)
         if serializer.is_valid():
@@ -138,25 +138,6 @@ def User_listdetail(request, user_id):
     elif request.method == 'DELETE':
         user.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
-    
-    
-@api_view(['GET'])
-def UserESP(request, user_id):
-    userObject = User.objects.get(id = user_id)
-    espOut = userObject.ESPoutputs.all()
-    espS = userObject.ESPsensor.all()
-    espObjects = ''
-    for item in espOut:
-        espObjects = espObjects + f'{{"name": {item.name}, "pin": {item.pin}, "status": {item.status}}},'
-        
-    espObjects = espObjects + '|'
-    
-    for item in espS:
-        espObjects = espObjects + f'{{"name": {item.name}, "pin": {item.pin}, "status": {item.value}}},'
-    
-    espObjects = espObjects[:-1]
-    espObjects = '[' + espObjects + ']'
-    return HttpResponse(espObjects) 
 
 
 @csrf_exempt

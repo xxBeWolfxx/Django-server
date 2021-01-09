@@ -24,11 +24,10 @@ class User(models.Model):
 class ESPSensor(models.Model):
     name = models.CharField(max_length = 20, null = True)
     pin = models.IntegerField()
-    valueTemp = models.IntegerField(blank = True)
-    
+    status = models.BooleanField(default = False)
+    valueTemp = models.IntegerField(blank = True)   
     valueAvgDay = models.CharField(validators=[validate_comma_separated_integer_list], max_length = 24, blank = True, default = '')
-    valueAvgWeek = models.CharField(validators=[validate_comma_separated_integer_list], max_length = 7, blank = True, default = '')
-    
+    valueAvgWeek = models.CharField(validators=[validate_comma_separated_integer_list], max_length = 7, blank = True, default = '')  
     description = models.TextField(blank = True, null = True)
     
     def __str__(self):
