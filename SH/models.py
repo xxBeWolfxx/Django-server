@@ -25,7 +25,7 @@ class ESPSensor(models.Model):
     name = models.CharField(max_length = 20, null = True)
     pin = models.IntegerField()
     status = models.BooleanField(default = False)
-    valueTemp = models.IntegerField(blank = True)   
+    valueTemp = models.IntegerField(blank = True, default = 0)   
     valueAvgDay = models.CharField(validators=[validate_comma_separated_integer_list], max_length = 24, blank = True, default = '')
     valueAvgWeek = models.CharField(validators=[validate_comma_separated_integer_list], max_length = 7, blank = True, default = '')  
     description = models.TextField(blank = True, null = True)
@@ -43,6 +43,7 @@ class ESPOut(models.Model):
     pin = models.IntegerField()
     status = models.BooleanField(default = False)
     description = models.TextField(blank = True, null = True)
+    
     
     def __str__(self):
         return self.name

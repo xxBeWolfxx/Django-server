@@ -16,5 +16,8 @@ class ESPOutSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = ESPOut
 		fields = ['id', 'name', 'pin', 'status', 'description']
+        
+        
+
 		
 		

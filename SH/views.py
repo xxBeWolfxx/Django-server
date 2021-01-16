@@ -26,13 +26,25 @@ def ESPSensor_list(request, user_id = 3):
         return Response(serializer.data)
         
     elif request.method == 'PUT':
-        serializer = ESPSensorSerializer(data = request.data)
+        data = JSONParser().parse(request)
+        serializer = ESPSensorSerializer(data = data)
         if serializer.is_valid():
             serializer.save()
+            idESP = serializer.data['id']
+            tempESP = ESPSensor.objects.get(id = idESP)
+            if user_id == 3:
+                user.ESPsensor.add(tempESP)
+                user.save()
+            if user_id != 3:
+                user.ESPsensor.add(tempESP)
+                user.save()
+                admin = User.objects.get(id = 3)
+                admin.ESPsensor.add(tempESP)
+                admin.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-@api_view(['GET','DELETE','PUT'])
+@api_view(['GET','DELETE','POST'])
 def ESPSensor_listdetail(request, esp_id):
     try:
         esp = ESPSensor.objects.get(pk = esp_id)
@@ -72,10 +84,19 @@ def ESPOut_list(request, user_id = 3):
         serializer = ESPOutSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
+            if user_id == 3:
+                user.ESPoutputs.add(tempESP)
+                user.save()
+            if user_id != 3:
+                user.ESPoutputs.add(tempESP)
+                user.save()
+                admin = User.objects.get(id = 3)
+                admin.ESPoutputs.add(tempESP)
+                admin.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-@api_view(['GET','DELETE','PUT'])
+@api_view(['GET','DELETE','POST'])
 def ESPOut_listdetail(request, esp_id):
     try:
         esp = ESPOut.objects.get(pk = esp_id)
