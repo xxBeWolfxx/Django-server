@@ -77,13 +77,21 @@ def ESPOut_list(request, user_id = 3):
 
     if request.method == 'GET':
         espO = user.ESPoutputs.all()
+        for item in espO:
+            if item.sensor != None:
+                espTemp = ESPSensor.objects.get(id = item.sensor.id)
+                item.currentValue = espTemp.valueTemp
+                item.save()
         serializer = ESPOutSerializer(espO, many = True)
         return Response(serializer.data)
         
     elif request.method == 'PUT':
-        serializer = ESPOutSerializer(data = request.data)
+        data = JSONParser().parse(request)
+        serializer = ESPOutSerializer(data = data)
         if serializer.is_valid():
             serializer.save()
+            idESP = serializer.data['id']
+            tempESP = ESPOut.objects.get(id = idESP)
             if user_id == 3:
                 user.ESPoutputs.add(tempESP)
                 user.save()

@@ -43,6 +43,10 @@ class ESPOut(models.Model):
     pin = models.IntegerField()
     status = models.BooleanField(default = False)
     description = models.TextField(blank = True, null = True)
+    sensor = models.ForeignKey(ESPSensor, on_delete = models.CASCADE, blank= True, null = True)
+    minValue = models.IntegerField(blank = True, default = 0)
+    maxValue = models.IntegerField(blank = True, default = 0)
+    currentValue = models.IntegerField(blank = True, default = 0)
     
     
     def __str__(self):
