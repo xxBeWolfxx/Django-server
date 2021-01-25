@@ -8,7 +8,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ESPSensorSerializer(serializers.ModelSerializer):
-    sensor = serializers.StringRelatedField(many=True)
     class Meta:
         model = ESPSensor
         fields = ['id', 'name', 'pin', 'status', 'valueTemp', 'valueAvgDay', 'valueAvgWeek', 'description']

@@ -44,8 +44,8 @@ class ESPOut(models.Model):
     status = models.BooleanField(default = False)
     description = models.TextField(blank = True, null = True)
     sensor = models.ForeignKey(ESPSensor, on_delete = models.CASCADE, blank= True, null = True)
-    minValue = models.IntegerField(blank = True, default = 0)
-    maxValue = models.IntegerField(blank = True, default = 0)
+    minValue = models.IntegerField(blank = True,  null = True)
+    maxValue = models.IntegerField(blank = True,  null = True)
     currentValue = models.IntegerField(blank = True, default = 0)
     
     

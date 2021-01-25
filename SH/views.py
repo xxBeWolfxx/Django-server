@@ -81,6 +81,16 @@ def ESPOut_list(request, user_id = 3):
             if item.sensor != None:
                 espTemp = ESPSensor.objects.get(id = item.sensor.id)
                 item.currentValue = espTemp.valueTemp
+                if item.minValue != None:
+                    if item.minValue > item.currentValue:
+                        item.status = True
+                    else:
+                        item.status = False
+                if item.maxValue != None:
+                    if item.maxValue > item.currentValue:
+                        item.status = True
+                    else:
+                        item.status = False
                 item.save()
         serializer = ESPOutSerializer(espO, many = True)
         return Response(serializer.data)
